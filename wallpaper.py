@@ -5,6 +5,7 @@ import re
 import sys
 import urllib
 import itertools
+from datetime import date
 
 if sys.version_info[0] < 3:
     print("SERIOUSLY, STOP USING PYTHON2.")
@@ -44,7 +45,7 @@ def download_image(url):
     """Download the image."""
     filename = re.findall("OHR.[\\w-]*.jpg", url)
     try:
-        print(filename[0][4:])
+        print(f"{filename[0][4:]} on {date.today()}")
     except IndexError:
         print(filename, url)
         exit()
@@ -67,9 +68,7 @@ def dostuff(url):
     # Download Image
     name = re.findall("\\w*_", img_detail)
     lol = name[0][: name[0].find("_")]
-    print(downloaded, lol)
     if lol not in downloaded:
-        print("downloading")
         download_image(img_url)
         downloaded.append(lol)
     return
@@ -116,7 +115,6 @@ if __name__ == "__main__":
         ],
         range(10),
     ):
-        print(idx, mkt)
         url = (
             "http://www.bing.com/HPImageArchive.aspx?format=xml&idx="
             + str(idx)
